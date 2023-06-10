@@ -75,7 +75,6 @@
     <module>avro</module>
     <module>compiler</module>
     <module>maven-plugin</module>
-    <module>ipc</module>
     <module>ipc-jetty</module>
     <module>ipc-netty</module>
     <module>trevni</module>
