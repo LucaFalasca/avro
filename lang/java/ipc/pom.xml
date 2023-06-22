@@ -77,19 +77,19 @@
               <goal>protocol</goal>
               <goal>idl-protocol</goal>
             </goals>
-            <configuration>
+            <!--<configuration>
               <excludes>
                 <exclude>**/mapred/tether/**</exclude>
                 <exclude>org/apache/avro/data/Json.avsc</exclude>
               </excludes>
               <stringType>String</stringType>
               <createOptionalGetters>true</createOptionalGetters>
-              <!--<gettersReturnOptional>true</gettersReturnOptional>-->
+              &lt;!&ndash;<gettersReturnOptional>true</gettersReturnOptional>&ndash;&gt;
               <sourceDirectory>${parent.project.basedir}/../../../../share/schemas/</sourceDirectory>
               <outputDirectory>${project.build.directory}/generated-sources/java</outputDirectory>
               <testSourceDirectory>${parent.project.basedir}/../../../../share/test/schemas/</testSourceDirectory>
               <testOutputDirectory>${project.build.directory}/generated-test-sources/java</testOutputDirectory>
-            </configuration>
+            </configuration>-->
           </execution>
         </executions>
       </plugin>

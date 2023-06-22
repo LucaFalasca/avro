@@ -29,10 +29,10 @@
 
   <artifactId>avro-test-custom-conversions</artifactId>
 
-  <name>Apache Avro Codegen Test dependencies</name>
+  <!--<name>Apache Avro Codegen Test dependencies</name>
   <packaging>jar</packaging>
   <url>https://avro.apache.org</url>
-  <description>Contains dependencies for the maven plugin used in avro-codegen-test</description>
+  <description>Contains dependencies for the maven plugin used in avro-codegen-test</description>-->
 
   <properties>
     <main.basedir>${project.parent.parent.parent.basedir}</main.basedir>

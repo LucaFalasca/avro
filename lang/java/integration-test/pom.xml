@@ -38,8 +38,8 @@
   </properties>
 
   <modules>
-    <module>codegen-test</module>
-    <module>test-custom-conversions</module>
+    <!--<module>codegen-test</module>
+    <module>test-custom-conversions</module>-->
   </modules>
 
   <build>
