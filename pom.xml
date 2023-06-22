@@ -45,6 +45,8 @@
     <main.basedir>${project.basedir}</main.basedir>
     <avro.distDir>dist</avro.distDir>
     <avro.docDir>build/avro-doc-${project.version}/api</avro.docDir>
+    <sonar.organization>lucafalasca</sonar.organization>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
     <!-- plugin versions -->
     <apache-rat-plugin.version>0.15</apache-rat-plugin.version>
