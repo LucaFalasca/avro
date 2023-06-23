@@ -68,13 +68,19 @@
     <javacc-plugin.version>3.0.3</javacc-plugin.version>
     <javacc.version>7.0.12</javacc.version>
     <cyclonedx-maven-plugin.version>2.7.5</cyclonedx-maven-plugin.version>
+
+    <!-- Luca Falasca jacoco-->
+    <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/lang/java/tests/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+
   </properties>
+
 
   <modules>
     <module>android</module>
     <module>avro</module>
     <module>compiler</module>
     <module>maven-plugin</module>
+    <!--<module>ipc</module>-->
     <module>ipc-jetty</module>
     <module>ipc-netty</module>
     <module>trevni</module>
@@ -86,6 +92,7 @@
     <module>grpc</module>
     <module>integration-test</module>
     <module>perf</module>
+    <module>tests</module>
   </modules>
 
   <build>
@@ -94,6 +101,24 @@
       parameters if the plugins are used by child projects -->
     <pluginManagement>
       <plugins>
+
+        <!--Luca Falasca-->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>3.7.0.1746</version>
+        </plugin>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.6</version>
+        </plugin>
+
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>build-helper-maven-plugin</artifactId>
@@ -156,17 +181,18 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>${maven-surefire-plugin.version}</version>
+          <!--In pratica sta roba non faceva funzionare Jacoco e i Test in generale-->
+          <!--<version>${maven-surefire-plugin.version}</version>
           <configuration>
             <includes>
-              <!-- Avro naming convention for JUnit tests -->
+              &lt;!&ndash; Avro naming convention for JUnit tests &ndash;&gt;
               <include>**/Test**</include>
             </includes>
             <excludes>
-              <!-- A few inner classes are not to be tested -->
+              &lt;!&ndash; A few inner classes are not to be tested &ndash;&gt;
               <exclude>**/*$*</exclude>
-              <!-- exclude the generated classes under apache.avro.test, some of
-                these match **/Test** and are not JUnit tests -->
+              &lt;!&ndash; exclude the generated classes under apache.avro.test, some of
+                these match **/Test** and are not JUnit tests &ndash;&gt;
               <exclude>**/apache/avro/test/**</exclude>
             </excludes>
             <enableAssertions>false</enableAssertions>
@@ -174,20 +200,20 @@
             <runOrder>random</runOrder>
             <parallel>all</parallel>
             <useUnlimitedThreads>true</useUnlimitedThreads>
-            <!--<perCoreThreadCount>true</perCoreThreadCount>-->
+            &lt;!&ndash;<perCoreThreadCount>true</perCoreThreadCount>&ndash;&gt;
 
-            <!-- TestSpecificCompiler instantiates a Java compiler to test output results,
+            &lt;!&ndash; TestSpecificCompiler instantiates a Java compiler to test output results,
                  this does not work with a manifest-only-jar to set the classpath for the javac.
                  This may cause problems on some platforms.
                  See https://maven.apache.org/plugins/maven-surefire-plugin/examples/class-loading.html
-                 for more information. -->
+                 for more information. &ndash;&gt;
             <useManifestOnlyJar>false</useManifestOnlyJar>
-            <!-- configures unit test standard error and standard out to go to a file per test
-                 rather than the console. -->
+            &lt;!&ndash; configures unit test standard error and standard out to go to a file per test
+                 rather than the console. &ndash;&gt;
             <redirectTestOutputToFile>true</redirectTestOutputToFile>
             <failIfNoTests>false</failIfNoTests>
             <argLine>-Xmx1000m</argLine>
-          </configuration>
+          </configuration>-->
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -299,12 +325,12 @@
         <artifactId>spotless-maven-plugin</artifactId>
         <configuration>
           <java>
-            <eclipse>
-              <!-- Avro uses Sun's java code style conventions with 2 spaces, this is a modified version of
-                   the eclipse formatter -->
+            <!--<eclipse>
+              &lt;!&ndash; Avro uses Sun's java code style conventions with 2 spaces, this is a modified version of
+                   the eclipse formatter &ndash;&gt;
               <file>${main.basedir}/lang/java/eclipse-java-formatter.xml</file>
               <version>4.19.0</version>
-            </eclipse>
+            </eclipse>-->
             <!-- Temporarily disabled for JDK 16+ builds -->
             <!--<removeUnusedImports/>-->
             <replaceRegex>
@@ -344,6 +370,28 @@
   </reporting>
 
   <profiles>
+
+    <!-- jacoco LucaFalasca -->
+    <profile>
+      <id>JacocoProfile</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
     <profile>
       <id>m2e</id>
       <activation>

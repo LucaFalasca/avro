@@ -71,6 +71,7 @@
 
   <modules>
     <module>lang/java</module>
+    <!--<module>lang/java/tests</module>-->
   </modules>
 
   <scm>
@@ -340,6 +341,7 @@
             <inherited>false</inherited>
             <executions>
               <execution>
+                <phase>test</phase>
                 <goals>
                   <goal>check</goal>
                 </goals>
