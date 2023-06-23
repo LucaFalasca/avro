@@ -215,6 +215,62 @@
         </plugins>
       </build>
     </profile>
+
+    <!-- Luca Falasca Pit Profile -->
+    <profile>
+      <id>PitProfile</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <pit.version>1.14.0</pit.version>
+      </properties>
+      <!--<dependencies>
+        <dependency>
+          <groupId>org.pitest</groupId>
+          <artifactId>pitest-maven</artifactId>
+          <version>${pit.version}</version>
+        </dependency>
+      </dependencies>-->
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-maven</artifactId>
+            <version>${pit.version}</version>
+            <configuration>
+              <!--<targetClasses>
+                <param>org.apache.avro.ArraysUtil</param>
+                <param>org.apache.avro.Schema*</param>
+                <param>org.apache.avro.JsonProperties*</param>
+                <param>org.apache.avro.Protocol*</param>
+              </targetClasses>
+              <targetTests>
+                <param>org.apache.avro.ArraysUtilTest</param>
+                <param>org.apache.avro.SchemaTest</param>
+                <param>org.apache.avro.ProtocolTest</param>
+              </targetTests>-->
+              <verbose>on</verbose>
+              <failWhenNoMutation>false</failWhenNoMutation>
+              <timestampedReports>false</timestampedReports>
+              <avoidCallsTo>
+                <avoidCallsTo>org.slf4j</avoidCallsTo>
+              </avoidCallsTo>
+            </configuration>
+            <executions>
+              <execution>
+                <id>Generate PIT report</id>
+                <phase>test-compile</phase>
+                <goals>
+                  <goal>mutationCoverage</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
   </profiles>
 
   <dependencies>
