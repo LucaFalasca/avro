@@ -63,7 +63,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: JaCoCoCoverage_Report
-          path: lang/java/tests/target/site/jacoco-aggregate/
+          path: lang/java/tests/target/site/
           if-no-files-found: error
 
 
