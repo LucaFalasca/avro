@@ -50,7 +50,7 @@ jobs:
       - name: directory
         run: ls -la
       - name: permission exe
-        run: chmod +x /installBaDua.sh
+        run: chmod +x installBaDua.sh
       - name: Install ba-dua
         run: ./installBaDua.sh 0.6.0
       - name: Build and coverage with ba-dua
