@@ -39,7 +39,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
 public class SchemaTest {
-  private Schema expectedResult;
+  private Class<? extends Schema> expectedResult;
   private Class<? extends Exception> expectedException;
   private String name;
   private String doc;
@@ -47,7 +47,7 @@ public class SchemaTest {
   private boolean isError;
   private List<Schema.Field> fields;
 
-  public SchemaTest(Schema expectedResult, Class<? extends Exception> expectedException, String name, String doc, String namespace, boolean isError, List<Schema.Field> fields){
+  public SchemaTest(Class<? extends Schema> expectedResult, Class<? extends Exception> expectedException, String name, String doc, String namespace, boolean isError, List<Schema.Field> fields){
     this.expectedResult = expectedResult;
     this.expectedException = expectedException;
     this.name = name;
@@ -96,12 +96,12 @@ public class SchemaTest {
   @Parameterized.Parameters
   public static Collection<Object[]> data(){
     return Arrays.asList(new Object[][]{
-      {null, null, "test", "test", "test", false, fieldsType.ONE.getFields()},
-      {null, null, "test", "test", "test", false, fieldsType.TWO.getFields()},
+      {Schema.class, null, "test", "test", "test", false, fieldsType.ONE.getFields()},
+      {Schema.class, null, "test", "test", "test", false, fieldsType.TWO.getFields()},
       {null, Exception.class, "", "", "", true, fieldsType.TWO.getFields()},
-      {null, null, null, null, null, false, fieldsType.ONE.getFields()}, //Test Fallito (Expected Exception: Exception.class)
+      {Schema.class, null, null, null, null, false, fieldsType.ONE.getFields()}, //Test Fallito (Expected Exception: Exception.class)
       {null, Exception.class, "test", "test", "test", false, fieldsType.NULL.getFields()},
-      {null, null, "test", "test", "test", false, fieldsType.EMPTY.getFields()}, //Test Fallito (Expected Exception: Exception.class)
+      {Schema.class, null, "test", "test", "test", false, fieldsType.EMPTY.getFields()}, //Test Fallito (Expected Exception: Exception.class)
 
       //Jacoco increment
       {null, Exception.class, "test", "test", "test", false, fieldsType.POSITION.getFields()},
@@ -122,7 +122,12 @@ public class SchemaTest {
     try{
       Schema schema = Schema.createRecord(name, doc, namespace, isError, fields);
       if(expectedException == null)
-        assertTrue(true);
+        if(expectedResult.isInstance(schema)){
+          assertTrue(true);
+        }
+        else{
+          fail();
+        }
       else
         fail();
     } catch (Exception e){
