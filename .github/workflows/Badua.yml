@@ -48,7 +48,7 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: permission exe
-        run: git update-index --chmod=+x ./installBaDua.sh
+        run: chmod +x /installBaDua.sh
       - name: Install ba-dua
         run: ./installBaDua.sh 0.6.0
       - name: Build and coverage with ba-dua
