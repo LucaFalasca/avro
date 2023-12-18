@@ -47,6 +47,8 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: directory
+        run: ls -la
       - name: permission exe
         run: chmod +x /installBaDua.sh
       - name: Install ba-dua
