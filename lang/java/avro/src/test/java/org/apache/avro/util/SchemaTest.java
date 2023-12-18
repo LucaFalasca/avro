@@ -17,6 +17,7 @@
  */
 package org.apache.avro.util;
 
+import org.apache.avro.AvroRuntimeException;
 import org.apache.avro.Schema;
 import org.junit.Before;
 import org.junit.Test;
@@ -61,7 +62,7 @@ public class SchemaTest {
     EMPTY,
     ONE,
     TWO,
-    POSITION;
+    POSITION, DUPLICATE;
 
     public List<Schema.Field> getFields() {
       try {
@@ -80,6 +81,8 @@ public class SchemaTest {
             f.setAccessible(true);
             f.set(field, 1);
             return Arrays.asList(field);
+          case DUPLICATE:
+            return Arrays.asList(new Schema.Field("test", Schema.create(Schema.Type.STRING), "test", null), new Schema.Field("test", Schema.create(Schema.Type.STRING), "test", null));
           default:
             return null;
         }
@@ -103,6 +106,9 @@ public class SchemaTest {
       //Jacoco increment
       {null, Exception.class, "test", "test", "test", false, fieldsType.POSITION.getFields()},
 
+      //Badua increment
+      {null, AvroRuntimeException.class, "test", "test", "test", false, fieldsType.DUPLICATE.getFields()},
+
     });
   }
 
@@ -121,6 +127,7 @@ public class SchemaTest {
         fail();
     } catch (Exception e){
       e.printStackTrace();
+      System.out.println(e.getMessage());
       if(expectedException != null)
         assertTrue(expectedException.isInstance(e));
       else
