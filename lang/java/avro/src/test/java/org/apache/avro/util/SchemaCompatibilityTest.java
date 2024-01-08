@@ -19,10 +19,12 @@ package org.apache.avro.util;
 
 import org.apache.avro.Schema;
 import org.apache.avro.SchemaCompatibility;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.mockito.Mockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -32,16 +34,19 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
 public class SchemaCompatibilityTest {
 
-private boolean expectedResult;
-private Schema reader;
-private Schema writer;
+  private boolean expectedResult;
+  private Schema reader;
+  private Schema writer;
 
   public SchemaCompatibilityTest(boolean expectedResult, Schema reader, Schema writer){
+
+
     this.expectedResult = expectedResult;
     this.reader = reader;
     this.writer = writer;
